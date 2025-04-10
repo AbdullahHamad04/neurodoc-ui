@@ -17,57 +17,49 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef })
     <form onSubmit={handleSubmit}>
       <div
         className="form-row"
-        style={{ display: 'flex', gap: '40px', alignItems: '', width: '100%' }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center', width: '100%' }}
       >
-<div className="floating-input" style={{ flex: 1, position: 'relative' }}>
-  <input
-    type="text"
-    value={query}
-    onChange={(e) => setQuery(e.target.value)}
-    ref={inputRef}
-    placeholder=" "
-    style={{ height: '30px', width: '100%' }}
-  />
-  <label>{placeholder}</label>
+        <div className="floating-input" style={{ width: '100%', position: 'relative' }}>
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            ref={inputRef}
+            placeholder=" "
+            style={{ height: '30px', width: '100%' }}
+          />
+          <label>{placeholder}</label>
 
-  <label
-    style={{
-      position: 'absolute',
-      right: '1px',
-      top: '35%',
-      transform: 'translateY(-55%)',
-      cursor: 'pointer'
-    }}
-  >
-    <img
-      src="/file-lines-regular.svg"
-      alt="upload"
-      style={{ width: '25px', height: '25px' }}
-    />
-    <input
-      type="file"
-      onChange={(e) => console.log('file selected:', e.target.files[0])}
-      style={{ display: 'none' }}
-    />
-  </label>
-</div>
+          <label
+            style={{
+              position: 'absolute',
+              right: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer'
+            }}
+          >
+            <img
+              src="/file-lines-regular.svg"
+              alt="upload"
+              style={{ width: '25px', height: '25px' }}
+            />
+            <input
+              type="file"
+              onChange={(e) => console.log('file selected:', e.target.files[0])}
+              style={{ display: 'none' }}
+            />
+          </label>
+        </div>
 
         <div style={{ display: 'flex', gap: '20px' }}>
-          <button type="submit" className="button red">
-            🔍 {searchLabel}
-          </button>
-
-          <button type="button" onClick={handleClear} className="button red ">
-
-            ❌ {clearLabel}
-          </button>
+          <button type="submit" className="button red">🔍 {searchLabel}</button>
+          <button type="button" onClick={handleClear} className="button red">❌ {clearLabel}</button>
         </div>
       </div>
-      
 
       {query && <p className="hint">↵ Press Enter to search</p>}
     </form>
-    
   );
 };
 
