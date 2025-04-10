@@ -26,14 +26,14 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef })
             onChange={(e) => setQuery(e.target.value)}
             ref={inputRef}
             placeholder=" "
-            style={{ height: '30px', width: '100%' }}
+            style={{ height: '35px', width: '90%' }}
           />
           <label>{placeholder}</label>
 
           <label
             style={{
               position: 'absolute',
-              right: '1px',
+              right: '15px',
               top: '35%',
               transform: 'translateY(-50%)',
               cursor: 'pointer'
