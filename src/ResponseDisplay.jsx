@@ -6,6 +6,7 @@ const ResponseDisplay = ({ response, label }) => {
       <h3>{label}:</h3>
       <p>{response || '...'}</p>
     </div>
+    
   );
 };
 

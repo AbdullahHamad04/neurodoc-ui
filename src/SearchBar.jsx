@@ -19,29 +19,46 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef })
         className="form-row"
         style={{ display: 'flex', gap: '40px', alignItems: 'center', width: '100%' }}
       >
-        <div className="floating-input" style={{ flex: 1 }}>
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            ref={inputRef}
-            placeholder=" "
-            style={{ height: '30px' }}
-          />
-          <label>{placeholder}</label>
-        </div>
+<div className="floating-input" style={{ flex: 1, position: 'relative' }}>
+  <input
+    type="text"
+    value={query}
+    onChange={(e) => setQuery(e.target.value)}
+    ref={inputRef}
+    placeholder=" "
+    style={{ height: '30px', width: '100%' }}
+  />
+  <label>{placeholder}</label>
 
-        <div style={{ display: 'flex', gap: '18px' }}>
-          <button type="submit" className="button" style={{ height: '44px' }}>
+  <label
+    style={{
+      position: 'absolute',
+      right: '1px',
+      top: '35%',
+      transform: 'translateY(-55%)',
+      cursor: 'pointer'
+    }}
+  >
+    <img
+      src="/file-lines-regular.svg"
+      alt="upload"
+      style={{ width: '25px', height: '25px' }}
+    />
+    <input
+      type="file"
+      onChange={(e) => console.log('file selected:', e.target.files[0])}
+      style={{ display: 'none' }}
+    />
+  </label>
+</div>
+
+        <div style={{ display: 'flex', gap: '20px' }}>
+          <button type="submit" className="button red">
             🔍 {searchLabel}
           </button>
 
-          <button
-            type="button"
-            onClick={handleClear}
-            className="button"
-            style={{ backgroundColor: '#e74c3c', height: '44px' }}
-          >
+          <button type="button" onClick={handleClear} className="button red ">
+
             ❌ {clearLabel}
           </button>
         </div>
