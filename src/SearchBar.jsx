@@ -17,7 +17,7 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef })
     <form onSubmit={handleSubmit}>
       <div
         className="form-row"
-        style={{ display: 'flex', gap: '40px', alignItems: 'center', width: '100%' }}
+        style={{ display: 'flex', gap: '40px', alignItems: '', width: '100%' }}
       >
 <div className="floating-input" style={{ flex: 1, position: 'relative' }}>
   <input
