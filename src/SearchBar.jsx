@@ -33,8 +33,8 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef })
           <label
             style={{
               position: 'absolute',
-              right: '10px',
-              top: '50%',
+              right: '1px',
+              top: '35%',
               transform: 'translateY(-50%)',
               cursor: 'pointer'
             }}
@@ -42,7 +42,7 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef })
             <img
               src="/file-lines-regular.svg"
               alt="upload"
-              style={{ width: '25px', height: '25px' }}
+              style={{ width: '20px', height: '25px' }}
             />
             <input
               type="file"
