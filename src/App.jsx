@@ -101,12 +101,14 @@ function App() {
   </select>
 
   <SearchBar
-    onSearch={handleSearch}
-    placeholder={t.placeholder}
-    searchLabel={t.search}
-    clearLabel={t.clear}
-    inputRef={inputRef}
-  />
+  onSearch={handleSearch}
+  placeholder={t.placeholder}
+  searchLabel={t.search}
+  clearLabel={t.clear}
+  inputRef={inputRef}
+  lang={lang}
+/>
+
 </div>
 
 
