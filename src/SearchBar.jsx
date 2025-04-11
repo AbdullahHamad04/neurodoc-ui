@@ -21,8 +21,8 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef, l
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '15px',
-          width: '88%',
+          gap: '20px',
+          width: '81%',
         }}
       >
         <div
@@ -40,6 +40,9 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef, l
             ref={inputRef}
             placeholder=" "
             style={{
+              height: '30px',
+              lineHeight: '50px',
+              paddingTop: '12px',
               paddingRight: lang === 'ar' ? '16px' : '45px',
               paddingLeft: lang === 'ar' ? '45px' : '16px',
             }}
@@ -68,7 +71,7 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef, l
           </label>
         </div>
 
-        <div style={{ display: 'flex', gap: '15px' }}>
+        <div style={{ display: 'flex', gap: '20px' }}>
           <button type="submit" className="button red">🔍 {searchLabel}</button>
           <button type="button" onClick={handleClear} className="button red">❌ {clearLabel}</button>
         </div>
