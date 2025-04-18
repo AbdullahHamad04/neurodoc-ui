@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef, lang }) => {
+const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabel, inputRef, lang }) => {
   const [query, setQuery] = useState('');
 
   const handleSubmit = (e) => {
@@ -11,6 +11,13 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef, l
   const handleClear = () => {
     setQuery('');
     onSearch('');
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      onFileUpload(file); // send file to backend
+    }
   };
 
   return (
@@ -65,7 +72,7 @@ const SearchBar = ({ onSearch, placeholder, searchLabel, clearLabel, inputRef, l
             />
             <input
               type="file"
-              onChange={(e) => console.log('File selected:', e.target.files[0])}
+              onChange={handleFileChange}
               style={{ display: 'none' }}
             />
           </label>
