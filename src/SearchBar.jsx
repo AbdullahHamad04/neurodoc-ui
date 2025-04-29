@@ -16,12 +16,12 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      onFileUpload(file); // send file to backend
+      onFileUpload(file);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <div
         className="form-row"
         style={{
@@ -29,7 +29,7 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
           flexDirection: 'column',
           alignItems: 'center',
           gap: '20px',
-          width: '81%',
+          width: '100%',
         }}
       >
         <div
@@ -38,6 +38,7 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
             width: '100%',
             direction: lang === 'ar' ? 'rtl' : 'ltr',
             position: 'relative',
+            maxWidth: '600px',
           }}
         >
           <input
@@ -59,8 +60,8 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
           <label
             style={{
               position: 'absolute',
-              top: '35%',
-              transform: 'translateY(-55%)',
+              top: '50%',
+              transform: 'translateY(-90%)',
               [lang === 'ar' ? 'left' : 'right']: '-40px',
               cursor: 'pointer',
             }}
@@ -68,7 +69,7 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
             <img
               src="/file-lines-regular.svg"
               alt="upload"
-              style={{ width: '22px', height: '25px' }}
+              style={{ width: '25px', height: '28px' }}
             />
             <input
               type="file"
@@ -78,7 +79,7 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
           </label>
         </div>
 
-        <div style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <button type="submit" className="button red">🔍 {searchLabel}</button>
           <button type="button" onClick={handleClear} className="button red">❌ {clearLabel}</button>
         </div>
