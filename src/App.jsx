@@ -18,7 +18,11 @@ const translations = {
     loading: 'Searching...',
     cleared: 'Search cleared',
     clearHistory: 'Clear History',
-    emptyQuery: '⚠️ Please enter a query before searching'
+    emptyQuery: '⚠️ Please enter a query before searching',
+    copy: 'Copy',
+    themeLight: 'Light',
+    themeDark: 'Dark',
+    scrollTop: 'Scroll to top',
   },
   ar: {
     title: 'نيورودوك',
@@ -29,7 +33,11 @@ const translations = {
     loading: 'جاري البحث...',
     cleared: 'تم المسح',
     clearHistory: 'مسح السجل',
-    emptyQuery: '⚠️ الرجاء كتابة استعلام قبل البحث'
+    emptyQuery: '⚠️ الرجاء كتابة استعلام قبل البحث',
+    copy: 'نسخ',
+    themeLight: 'فاتح',
+    themeDark: 'داكن',
+    scrollTop: 'العودة للأعلى',
   },
   pl: {
     title: 'NeuroDoc',
@@ -40,7 +48,11 @@ const translations = {
     loading: 'Wyszukiwanie...',
     cleared: 'Wyczyszczono',
     clearHistory: 'Wyczyść historię',
-    emptyQuery: '⚠️ Wprowadź zapytanie przed wyszukiwaniem'
+    emptyQuery: '⚠️ Wprowadź zapytanie przed wyszukiwaniem',
+    copy: 'Kopiuj',
+    themeLight: 'Jasny',
+    themeDark: 'Ciemny',
+    scrollTop: 'Do góry',
   },
 };
 
@@ -77,7 +89,7 @@ function App() {
       const data = await res.json();
       if (data.answer) {
         setResponse(data.answer);
-        setHistory(prev => [query, ...prev]);
+        setHistory((prev) => [query, ...prev]);
       } else {
         setResponse('No answer received from server.');
       }
@@ -88,7 +100,6 @@ function App() {
   };
 
   const handleInputClear = () => {
-    // clear input/result without triggering toast
     setResponse('');
     setDisplayedText('');
     setUploadedFileName('');
@@ -121,7 +132,7 @@ function App() {
     let i = 0;
     if (!loading && response) {
       const timer = setInterval(() => {
-        setDisplayedText(prev => prev + response[i]);
+        setDisplayedText((prev) => prev + response[i]);
         i++;
         if (i >= response.length) clearInterval(timer);
       }, 30);
@@ -135,14 +146,14 @@ function App() {
 
       <div className="top-controls">
         <div className="selector-group">
-          <select value={lang} onChange={e => setLang(e.target.value)} className="button">
+          <select value={lang} onChange={(e) => setLang(e.target.value)} className="button">
             <option value="en">🌐 English</option>
             <option value="pl">🇵🇱 Polski</option>
             <option value="ar">🇸🇦 العربية</option>
           </select>
-          <select value={theme} onChange={e => setTheme(e.target.value)} className="button">
-            <option value="light">☀️ Light</option>
-            <option value="dark">🌙 Dark</option>
+          <select value={theme} onChange={(e) => setTheme(e.target.value)} className="button">
+            <option value="light">☀️ {t.themeLight}</option>
+            <option value="dark">🌙 {t.themeDark}</option>
           </select>
         </div>
 
@@ -177,7 +188,7 @@ function App() {
           }}
           className="button copy"
         >
-          📎 {lang === 'ar' ? 'نسخ' : 'Copy'}
+          📎 {t.copy}
         </button>
         <button onClick={handleInputClear} className="button clear">
           🧹 {t.clearHistory}
@@ -186,9 +197,16 @@ function App() {
 
       <SearchHistory items={history} onSelect={handleSearch} />
       <Toast message={toastMessage} visible={showToast} />
-      <FloatingButton icon="↑" label="Scroll to top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
 
-      <div id="response-box" className="response">{response || '...'}</div>
+      <FloatingButton
+        icon="↑"
+        label={t.scrollTop}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      />
+
+      <div id="response-box" className="response">
+        {response || '...'}
+      </div>
     </div>
   );
 }

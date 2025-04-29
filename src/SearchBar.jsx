@@ -40,16 +40,15 @@ const SearchBar = ({
           width: '100%',
         }}
       >
-<div
-  className="floating-input"
-  dir={lang === 'ar' ? 'rtl' : 'ltr'}
-  style={{
-    width: '100%',
-    maxWidth: '600px',
-    position: 'relative',
-  }}
->
-
+        <div
+          className="floating-input"
+          dir={lang === 'ar' ? 'rtl' : 'ltr'}
+          style={{
+            width: '100%',
+            maxWidth: '600px',
+            position: 'relative',
+          }}
+        >
           <input
             id="search-field"
             type="text"
@@ -60,7 +59,7 @@ const SearchBar = ({
             required
             className="floating-text-input"
             style={{
-              padding: lang === 'ar' ? '15px 1px 0px 4px' : '15px 1px 0 4px',
+              padding: lang === 'ar' ? '15px 1px 0 4px' : '15px 1px 0 4px',
               textAlign: lang === 'ar' ? 'right' : 'left',
             }}
           />
