@@ -10,7 +10,7 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
 
   const handleClear = () => {
     setQuery('');
-    onSearch('');
+    onSearch('', true);
   };
 
   const handleFileChange = (e) => {

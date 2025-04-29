@@ -36,14 +36,18 @@ function App() {
   const inputRef = useRef();
   const t = translations[lang];
 
-  const handleSearch = async (query) => {
+  const handleSearch = async (query, skipToast = false) => {
     if (!query.trim()) {
       setResponse('');
       setDisplayedText('');
       setUploadedFileName('');
-      setToastMessage(t.emptyQuery);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000);
+
+      if (!skipToast) {
+        setToastMessage(t.emptyQuery);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 2000);
+      }
+
       return;
     }
 
@@ -105,6 +109,7 @@ function App() {
 
   const handleClearHistory = () => {
     setHistory([]);
+    handleSearch('', true);
   };
 
   useEffect(() => {
@@ -183,12 +188,11 @@ function App() {
         </button>
       </div>
 
-      <SearchHistory items={history} onSelect={handleSearch} />
+      <SearchHistory items={history} onSelect={(q) => handleSearch(q)} />
 
       <Toast message={toastMessage} visible={showToast} />
 
-      <FloatingButton icon="↑" label="Scroll to top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
-
+      <FloatingButton icon="↑" label="Scroll Top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
 
       <div id="response-box" className="response">
         {response || '...'}
