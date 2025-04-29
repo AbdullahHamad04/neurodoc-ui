@@ -1,10 +1,10 @@
+// FloatingButton.jsx
 import React from 'react';
-
 
 const FloatingButton = ({ icon, label, onClick }) => {
   return (
-    <button className="fab" onClick={onClick} aria-label={label}>
-      {icon}
+    <button className="floating-button" onClick={onClick} aria-label={label} title={label}>
+      {icon || '↑'}
     </button>
   );
 };

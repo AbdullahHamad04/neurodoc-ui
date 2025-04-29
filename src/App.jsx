@@ -43,7 +43,7 @@ function App() {
       setUploadedFileName('');
       setToastMessage(t.emptyQuery);
       setShowToast(true);
-      setTimeout(() => setShowToast(false), 5000);
+      setTimeout(() => setShowToast(false), 2000);
       return;
     }
 
@@ -158,12 +158,12 @@ function App() {
       {loading ? <Spinner /> : <ResponseDisplay response={displayedText} label={t.response} />}
 
       {uploadedFileName && !loading && (
-        <div style={{ marginTop: '20px', fontWeight: 'bold', fontSize: '16px', color: '#4f46e5' }}>
+        <div style={{ marginTop: '20px', fontWeight: 'bold', fontSize: '16px', color: '#4f46e5', textAlign: 'center' }}>
           📄 Uploaded File: {uploadedFileName}
         </div>
       )}
 
-      <div style={{ display: 'flex', justifyContent: lang === 'ar' ? 'flex-end' : 'flex-start', gap: '10px', marginTop: '10px', marginBottom: '10px' }}>
+      <div className="button-group horizontal">
         <button
           type="button"
           onClick={() => {
@@ -173,13 +173,12 @@ function App() {
               alert('📋 Copied the response!');
             }
           }}
-          className="button"
-          style={{ backgroundColor: '#8e44ad', color: 'white', height: '40px', width: '100px' }}
+          className="button copy"
         >
           📎 {lang === 'ar' ? 'نسخ' : 'Copy'}
         </button>
 
-        <button onClick={handleClearHistory} className="button" style={{ backgroundColor: '#6c757d' }}>
+        <button onClick={handleClearHistory} className="button clear">
           🧹 {t.clearHistory}
         </button>
       </div>
@@ -188,7 +187,8 @@ function App() {
 
       <Toast message={toastMessage} visible={showToast} />
 
-      <FloatingButton icon="⬆️" label="Scroll Top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
+      <FloatingButton icon="↑" label="Scroll to top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
+
 
       <div id="response-box" className="response">
         {response || '...'}
