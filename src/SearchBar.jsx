@@ -10,14 +10,12 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
 
   const handleClear = () => {
     setQuery('');
-    onSearch('', true);
+    onSearch('', true); // skip toast when clearing input
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      onFileUpload(file); // send file to backend
-    }
+    if (file) onFileUpload(file);
   };
 
   return (
@@ -32,6 +30,7 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
           width: '81%',
         }}
       >
+        {/* Floating input with file upload icon */}
         <div
           className="floating-input"
           style={{
@@ -78,9 +77,14 @@ const SearchBar = ({ onSearch, onFileUpload, placeholder, searchLabel, clearLabe
           </label>
         </div>
 
-        <div style={{ display: 'flex', gap: '20px' }}>
-          <button type="submit" className="button red">🔍 {searchLabel}</button>
-          <button type="button" onClick={handleClear} className="button red">❌ {clearLabel}</button>
+        {/* Search and Clear buttons */}
+        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+          <button type="submit" className="button red">
+            🔍 {searchLabel}
+          </button>
+          <button type="button" onClick={handleClear} className="button red">
+            ❌ {clearLabel}
+          </button>
         </div>
       </div>
     </form>

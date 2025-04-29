@@ -41,7 +41,6 @@ body.dark {
   }
 }
 
-
 .top-controls {
   display: flex;
   flex-direction: column;
@@ -50,6 +49,15 @@ body.dark {
   gap: 15px;
   margin-bottom: 2rem;
   width: 100%;
+}
+
+/* New: side-by-side dropdowns */
+.dropdown-row {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .button,
@@ -227,4 +235,41 @@ input[type="text"]:focus {
     background-color: red;
   }
      
+  .form-row {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+  }
+  
+  .floating-input input[type="text"] {
+    width: 100%;
+    font-size: 1rem;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+    padding: 12px 20px;
+    box-sizing: border-box;
+  }
+  
+  .floating-input label {
+    font-size: 0.85rem;
+    position: absolute;
+    top: -8px;
+    left: 16px;
+    background: white;
+    padding: 0 6px;
+    color: #666;
+  }
+
+  .dropdown-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
 }
