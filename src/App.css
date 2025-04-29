@@ -245,3 +245,61 @@ body.dark .floating-input input:not(:placeholder-shown) + label {
   background-color: #1e1e2f;
   color: #a5b4fc;
 }
+
+.floating-input {
+  position: relative;
+  width: 100%;
+}
+
+.floating-text-input {
+  width: 100%;
+  height: 60px;
+  font-size: 1.2rem;
+  padding: 20px 50px 0 16px;
+  border: 2px solid #ccc;
+  border-radius: 16px;
+  outline: none;
+  background: white;
+}
+
+body.dark .floating-text-input {
+  background: #2b2b3d;
+  color: white;
+  border-color: #666;
+}
+
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  right: auto;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: 0.2s ease all;
+  background-color: transparent;
+  padding: 0 4px;
+}
+
+.floating-input[dir="rtl"] .floating-label {
+  left: auto;
+  right: 16px;
+  text-align: right;
+}
+
+
+/* Trigger floating */
+.floating-text-input:focus + .floating-label,
+.floating-text-input:not(:placeholder-shown) + .floating-label {
+  top: 8px;
+  font-size: 0.8rem;
+  color: #4f46e5;
+  background-color: #f0f2f5;
+}
+
+body.dark .floating-text-input:focus + .floating-label,
+body.dark .floating-text-input:not(:placeholder-shown) + .floating-label {
+  background-color: #1e1e2f;
+  color: #a5b4fc;
+}
