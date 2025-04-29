@@ -1,11 +1,12 @@
+
 import React from 'react';
 
 const Toast = ({ message, visible }) => {
-  return (
-    <div className={`toast ${visible ? 'show' : ''}`}>
+  return visible ? (
+    <div className="toast">
       {message}
     </div>
-  );
+  ) : null;
 };
 
 export default Toast;

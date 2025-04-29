@@ -11,15 +11,15 @@ import SearchHistory from './SearchHistory';
 const translations = {
   en: {
     title: 'NeuroDoc', placeholder: 'Ask something...', search: 'Search', clear: 'Clear',
-    response: 'Response', loading: 'Searching...', cleared: 'Search cleared', clearHistory: 'Clear History'
+    response: 'Response', loading: 'Searching...', cleared: 'Search cleared', clearHistory: 'Clear History', emptyQuery: '⚠️ Please enter a query before searching'
   },
   ar: {
     title: 'نيورودوك', placeholder: 'اسأل شيئًا...', search: 'بحث', clear: 'مسح',
-    response: 'الإجابة', loading: 'جاري البحث...', cleared: 'تم المسح', clearHistory: 'مسح السجل'
+    response: 'الإجابة', loading: 'جاري البحث...', cleared: 'تم المسح', clearHistory: 'مسح السجل', emptyQuery: '⚠️ الرجاء كتابة استعلام قبل البحث'
   },
   pl: {
     title: 'NeuroDoc', placeholder: 'Zadaj pytanie...', search: 'Szukaj', clear: 'Wyczyść',
-    response: 'Odpowiedź', loading: 'Wyszukiwanie...', cleared: 'Wyczyszczono', clearHistory: 'Wyczyść historię'
+    response: 'Odpowiedź', loading: 'Wyszukiwanie...', cleared: 'Wyczyszczono', clearHistory: 'Wyczyść historię', emptyQuery: '⚠️ Wprowadź zapytanie przed wyszukiwaniem'
   },
 };
 
@@ -29,6 +29,7 @@ function App() {
   const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const [history, setHistory] = useState([]);
   const [displayedText, setDisplayedText] = useState('');
   const [uploadedFileName, setUploadedFileName] = useState('');
@@ -39,9 +40,10 @@ function App() {
     if (!query.trim()) {
       setResponse('');
       setDisplayedText('');
-      setShowToast(true);
       setUploadedFileName('');
-      setTimeout(() => setShowToast(false), 1500);
+      setToastMessage(t.emptyQuery);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 5000);
       return;
     }
 
@@ -52,9 +54,7 @@ function App() {
     try {
       const res = await fetch('http://localhost:8000/query/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: query }),
       });
 
@@ -93,7 +93,6 @@ function App() {
 
       if (res.ok) {
         console.log('✅ File uploaded successfully:', data.message);
-      
       } else {
         console.error('❌ Upload failed:', data.error);
       }
@@ -127,27 +126,20 @@ function App() {
 
   return (
     <div className="container animated-bg" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-      {/* logo image */}
       <img
         src="/neuro-logo.svg"
         alt="NeuroDoc Logo"
         style={{ height: '150px', marginBottom: '80px' }}
       />
 
-      <div className="top-controls" style={{ 
-        display: 'flex', 
-        flexWrap: 'wrap', 
-        justifyContent: 'flex-start', 
-        gap: '15px', 
-        marginBottom: '50px' 
-      }}>
-        <select value={lang} onChange={(e) => setLang(e.target.value)} className="button" aria-label="Select language">
+      <div className="top-controls">
+        <select value={lang} onChange={(e) => setLang(e.target.value)} className="button">
           <option value="en">🌐 English</option>
           <option value="pl">🇵🇱 Polski</option>
           <option value="ar">🇸🇦 العربية</option>
         </select>
 
-        <select value={theme} onChange={(e) => setTheme(e.target.value)} className="button" aria-label="Select theme">
+        <select value={theme} onChange={(e) => setTheme(e.target.value)} className="button">
           <option value="light">☀️ Light</option>
           <option value="dark">🌙 Dark</option>
         </select>
@@ -165,7 +157,6 @@ function App() {
 
       {loading ? <Spinner /> : <ResponseDisplay response={displayedText} label={t.response} />}
 
-      {/* 📄 show uploaded file name */}
       {uploadedFileName && !loading && (
         <div style={{ marginTop: '20px', fontWeight: 'bold', fontSize: '16px', color: '#4f46e5' }}>
           📄 Uploaded File: {uploadedFileName}
@@ -195,7 +186,7 @@ function App() {
 
       <SearchHistory items={history} onSelect={handleSearch} />
 
-      <Toast message={t.cleared} visible={showToast} />
+      <Toast message={toastMessage} visible={showToast} />
 
       <FloatingButton icon="⬆️" label="Scroll Top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
 
