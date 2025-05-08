@@ -71,15 +71,15 @@ body.dark {
 }
 
 .response {
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
-  padding: 5rem;
+  padding: 4rem;
   background-color: #fff;
   border-radius: 2rem;
   box-shadow: 0 9px 1px rgba(0,0,0,0.1);
-  text-align: justify;
+  text-align: left;
   width: 100%;
-  min-height: 65px;
+  min-height: 60px;
   white-space: pre-wrap;
 }
 
