@@ -204,9 +204,10 @@ function App() {
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       />
 
-      <div id="response-box" className="response">
-        {response || '...'}
-      </div>
+<div id="response-box" className="response">
+  <p className="snippet">{response || '...'}</p>
+</div>
+
     </div>
   );
 }
