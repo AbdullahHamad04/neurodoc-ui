@@ -1,20 +1,21 @@
-// SearchBar.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = ({
   onSearch,
   onClear,
   onFileUpload,
   placeholder,
-  searchLabel,
-  clearLabel,
   inputRef,
   lang,
+  onToggleFilters
 }) => {
   const [query, setQuery] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!query.trim()) return;
     onSearch(query);
   };
 
@@ -28,25 +29,35 @@ const SearchBar = ({
     if (file) onFileUpload(file);
   };
 
+  const handleFilter = () => {
+    if (onToggleFilters) onToggleFilters();
+  };
+
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
       <div
         className="form-row"
+        dir={lang === 'ar' ? 'rtl' : 'ltr'}
         style={{
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
-          gap: '30px',
+          justifyContent: 'center',
+          gap: '1px',
+          flexWrap: 'wrap',
+          maxWidth: '700px',
+          margin: '20px auto',
           width: '100%',
         }}
       >
+        {/* input field */}
         <div
           className="floating-input"
-          dir={lang === 'ar' ? 'rtl' : 'ltr'}
           style={{
-            width: '100%',
-            maxWidth: '600px',
+            flex: 1,
+            maxWidth: '500px',
             position: 'relative',
+            marginRight: lang === 'ar' ? '0' : '28px',
+            marginLeft: lang === 'ar' ? '28px' : '0',
           }}
         >
           <input
@@ -59,7 +70,7 @@ const SearchBar = ({
             required
             className="floating-text-input"
             style={{
-              padding: lang === 'ar' ? '15px 1px 0 4px' : '15px 1px 0 4px',
+              padding: lang === 'ar' ? '20px 1px 0 14px' : '14px 5px 0 20px',
               textAlign: lang === 'ar' ? 'right' : 'left',
             }}
           />
@@ -67,20 +78,21 @@ const SearchBar = ({
             {placeholder}
           </label>
 
+          {/* upload icon */}
           <div
             onClick={() => document.getElementById('file-upload').click()}
             style={{
               position: 'absolute',
               top: '50%',
-              transform: 'translateY(-50%)',
-              [lang === 'ar' ? 'left' : 'right']: '16px',
+              transform: 'translateY(-45%)',
+              [lang === 'ar' ? 'left' : 'right']: '-13px',
               cursor: 'pointer',
             }}
           >
             <img
               src="/file-lines-regular.svg"
               alt="upload"
-              style={{ width: '26px', height: '30px' }}
+              style={{ width: '21px', height: '30px' }}
             />
             <input
               id="file-upload"
@@ -91,21 +103,26 @@ const SearchBar = ({
           </div>
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            gap: '25px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-          }}
+        {/* buttons next to input */}
+        <button type="submit" className="icon-only-btn">
+          <img src="/btn_search.png" alt="search" />
+        </button>
+
+        <button
+          type="button"
+          onClick={handleClear}
+          className="icon-only-btn"
         >
-          <button type="submit" className="button red">
-            🔍 {searchLabel}
-          </button>
-          <button type="button" onClick={handleClear} className="button red">
-            ❌ {clearLabel}
-          </button>
-        </div>
+          <img src="/btn_clear.png" alt="clear" />
+        </button>
+
+        <button
+          type="button"
+          onClick={handleFilter}
+          className="icon-only-btn"
+        >
+          <img src="/btn_filter.png" alt="filter" />
+        </button>
       </div>
     </form>
   );
