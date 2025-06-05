@@ -1,0 +1,65 @@
+.filters-container {
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  max-width: 500px;
+  margin: 20px auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 1px;
+  font-weight: 500;
+  color: #333;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 10px 1px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-date {
+  flex: 1;
+  padding: 10px;
+  border: 3px solid #ccc;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.1px;
+  margin-top: 15px;
+}
+
+.btn-clear,
+.btn-search {
+  border: none;
+  border-radius: 10px;
+  padding: 1px 0px;
+  background: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.btn-clear img,
+.btn-search img {
+  width: 26px;
+  height: 26px;
+}

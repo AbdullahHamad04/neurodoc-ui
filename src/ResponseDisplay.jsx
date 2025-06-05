@@ -4,9 +4,8 @@ const ResponseDisplay = ({ response, label }) => {
   return (
     <div className="response">
       <h3>{label}:</h3>
-      <p>{response || '...'}</p>
+      <div id="response-box" dangerouslySetInnerHTML={{ __html: response || '...' }} />
     </div>
-    
   );
 };
 

@@ -38,9 +38,9 @@ function App() {
       clear: 'Wyczyść',
       copy: 'Kopiuj',
       clearHistory: 'Wyczyść historię',
-      emptyQuery: '⚠️ Wprowadź zapytanie przed wyszukiwaniem',
       themeLight: 'Jasny',
       themeDark: 'Ciemny',
+      emptyQuery: '⚠️ Wprowadź zapytanie przed wyszukiwaniem',
     }
   };
 
@@ -61,8 +61,7 @@ function App() {
   const [selectedLang, setSelectedLang] = useState(localStorage.getItem('lang') || 'all');
   const lang = selectedLang === 'all' ? getDefaultLang() : selectedLang;
   const [theme, setTheme] = useState('light');
-  const [response, setResponse] = useState('');
-  const [displayedText, setDisplayedText] = useState('');
+  const [response, setResponse] = useState([]);
   const [loading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
@@ -83,7 +82,7 @@ function App() {
 
   const t = translations[lang];
 
-  const handleSearch = async (query, extraFilters = filters) => {
+  const handleSearch = async (query) => {
     if (!query.trim()) {
       setToastMessage(t.emptyQuery);
       setShowToast(true);
@@ -92,77 +91,32 @@ function App() {
     }
 
     setLoading(true);
-    setResponse('');
-    setDisplayedText('');
+    setResponse([]);
     setUploadedFileName('');
 
-    const must = [{ match: { "title.ar": query } }];
-
-    if (extraFilters?.announceFrom && extraFilters?.announceTo) {
-      must.push({
-        range: {
-          "announcement_date": {
-            gte: extraFilters.announceFrom,
-            lte: extraFilters.announceTo,
-          },
-        },
-      });
-    }
-
-    if (extraFilters?.releaseFrom && extraFilters?.releaseTo) {
-      must.push({
-        range: {
-          "release_date": {
-            gte: extraFilters.releaseFrom,
-            lte: extraFilters.releaseTo,
-          },
-        },
-      });
+    const params = new URLSearchParams();
+    params.append('q', query);
+    params.append('lang', lang);
+    if (filters) {
+      for (const [key, value] of Object.entries(filters)) {
+        if (value) params.append(key, value);
+      }
     }
 
     try {
-      const res = await fetch('http://localhost:9200/ndoc_documents/_search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: { bool: { must } },
-          highlight: {
-            fields: {
-              'title.ar': {},
-              'summary.ar': {},
-            },
-            pre_tags: ['<mark>'],
-            post_tags: ['</mark>'],
-          },
-        }),
-      });
-
+      const res = await fetch(`http://localhost:8000/search/api_search?${params}`);
       const data = await res.json();
-      const hit = data.hits?.hits?.[0];
-
-      if (hit) {
-        const highlight = hit.highlight || {};
-        const highlightedText =
-          highlight['summary.ar']?.[0] ||
-          highlight['title.ar']?.[0] ||
-          hit._source?.summary?.ar ||
-          hit._source?.title?.ar;
-
-        setResponse(highlightedText || 'لم يتم العثور على نتيجة واضحة.');
-        setHistory((prev) => [query, ...prev.filter((item) => item !== query)]);
-      } else {
-        setResponse('❌ لا توجد نتائج');
-      }
+      setResponse(data.results || []);
+      setHistory((prev) => [query, ...prev.filter((item) => item !== query)]);
     } catch {
-      setResponse('❌ حدث خطأ أثناء الاتصال بـ OpenSearch');
+      setResponse([{ title: '', snippet: '❌ error contacting server', href: '#' }]);
     }
 
     setLoading(false);
   };
 
   const handleInputClear = () => {
-    setResponse('');
-    setDisplayedText('');
+    setResponse([]);
     setUploadedFileName('');
   };
 
@@ -181,18 +135,6 @@ function App() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    let i = 0;
-    if (!loading && response) {
-      const timer = setInterval(() => {
-        setDisplayedText((prev) => prev + response[i]);
-        i++;
-        if (i >= response.length) clearInterval(timer);
-      }, 30);
-      return () => clearInterval(timer);
-    }
-  }, [response, loading]);
-
   return (
     <div className="container" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
       <img src="./neuro-logo.svg" alt="NeuroDoc Logo" className="logo" />
@@ -200,7 +142,7 @@ function App() {
       <div className="top-controls">
         <div className="selector-group">
           <select value={selectedLang} onChange={(e) => setSelectedLang(e.target.value)} className="button">
-            <option value="all"> All Languages (Auto)</option>
+            <option value="all">All Languages (Auto)</option>
             {supportedLangs.map((code) => (
               <option key={code} value={code}>
                 {languageNames[code] || code.toUpperCase()}
@@ -232,7 +174,7 @@ function App() {
         onSearch={(f) => {
           setFilters(f);
           if (inputRef.current?.value) {
-            handleSearch(inputRef.current.value, f);
+            handleSearch(inputRef.current.value);
           }
         }}
       />
@@ -246,7 +188,17 @@ function App() {
       {loading ? (
         <Spinner />
       ) : (
-        <ResponseDisplay response={displayedText} label={t.response} />
+        <div style={{ textAlign: 'left', marginTop: '2rem' }}>
+          {response.map((res, idx) => (
+            <div key={idx} className="result-box">
+              <a href={res.href} className="result-title" target="_blank" rel="noreferrer">
+                <h4 dangerouslySetInnerHTML={{ __html: res.title }}></h4>
+              </a>
+              <div className="snippet" dangerouslySetInnerHTML={{ __html: res.snippet }}></div>
+              {res.meta && <div className="result-meta">{res.meta}</div>}
+            </div>
+          ))}
+        </div>
       )}
 
       {uploadedFileName && !loading && (

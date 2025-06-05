@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
+import './AdvancedFilters.css';
+import clearIcon from './assets/btn_clear.png';
+import searchIcon from './assets/btn_search.png';
 
 const AdvancedFilters = ({ visible, onSearch }) => {
   if (!visible) return null;
 
-  // refs
   const contentRef = useRef();
   const announceFromRef = useRef();
   const announceToRef = useRef();
@@ -36,88 +38,46 @@ const AdvancedFilters = ({ visible, onSearch }) => {
   };
 
   return (
-    <div
-      id="advancedSearch"
-      style={{
-        maxWidth: '800px',
-        margin: '0 auto',
-        padding: '20px',
-        borderTop: '1px solid #ddd',
-        borderRadius: '12px',
-        background: '#fff',
-      }}
-    >
-      {/* Document Content */}
-      <div className="mb-3">
-        <input
-          ref={contentRef}
-          type="text"
-          className="form-control"
-          placeholder='"keywords" in content'
-        />
+    <div className="filters-container">
+      <div className="filter-group">
+        <label><span role="img" aria-label="doc">📄</span> <strong>Document Content:</strong></label>
+        <input type="text" ref={contentRef} className="filter-input" placeholder='"keywords" in content' />
       </div>
 
-      {/* Announcement Date */}
-      <label className="form-label text-muted">Announcement Date:</label>
-      <div className="row mb-3">
-        <div className="col">
-          <label className="form-label">From:</label>
-          <input type="date" className="form-control" ref={announceFromRef} />
-        </div>
-        <div className="col">
-          <label className="form-label">To:</label>
-          <input type="date" className="form-control" ref={announceToRef} />
+      <div className="filter-group">
+        <label><span role="img" aria-label="calendar">📅</span> <strong>Announcement Date:</strong></label>
+        <div className="date-row">
+          <input type="date" ref={announceFromRef} className="filter-date" />
+          <span>→</span>
+          <input type="date" ref={announceToRef} className="filter-date" />
         </div>
       </div>
 
-      {/* Release Date */}
-      <label className="form-label text-muted">Release Date:</label>
-      <div className="row mb-3">
-        <div className="col">
-          <label className="form-label">From:</label>
-          <input type="date" className="form-control" ref={releaseFromRef} />
-        </div>
-        <div className="col">
-          <label className="form-label">To:</label>
-          <input type="date" className="form-control" ref={releaseToRef} />
+      <div className="filter-group">
+        <label><span role="img" aria-label="calendar">📆</span> <strong>Release Date:</strong></label>
+        <div className="date-row">
+          <input type="date" ref={releaseFromRef} className="filter-date" />
+          <span>→</span>
+          <input type="date" ref={releaseToRef} className="filter-date" />
         </div>
       </div>
 
-      {/* Signature */}
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Signature..."
-          ref={signatureRef}
-        />
+      <div className="filter-group">
+        <label><span role="img" aria-label="pen">✍️</span> <strong>Signature:</strong></label>
+        <input type="text" ref={signatureRef} className="filter-input" placeholder="Signature..." />
       </div>
 
-      {/* Topics */}
-      <div className="mb-4">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Tags or keywords..."
-          ref={topicsRef}
-        />
+      <div className="filter-group">
+        <label><span role="img" aria-label="tag">🏷️</span> <strong>Tags / Topics:</strong></label>
+        <input type="text" ref={topicsRef} className="filter-input" placeholder="Tags or keywords..." />
       </div>
 
-      {/* Action Buttons */}
-      <div className="d-flex justify-content-end gap-2">
-        <button
-          className="btn btn-danger"
-          onClick={handleClear}
-          style={{ borderRadius: '8px' }}
-        >
-          Clear
+      <div className="filter-buttons">
+        <button className="btn-clear" onClick={handleClear}>
+          <img src={clearIcon} alt="Clear" />
         </button>
-        <button
-          className="btn btn-primary"
-          onClick={handleSearchClick}
-          style={{ borderRadius: '8px' }}
-        >
-          Search
+        <button className="btn-search" onClick={handleSearchClick}>
+          <img src={searchIcon} alt="Search" />
         </button>
       </div>
     </div>

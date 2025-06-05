@@ -64,6 +64,34 @@ html, body {
   background: white;
   color: rgb(185, 35, 35);
 }
+.results-list {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.result-item {
+  background: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.result-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #0a58ca;
+}
+
+.result-snippet {
+  line-height: 1.6;
+  margin-top: 0.5rem;
+}
+
+mark {
+  background-color: yellow;
+  font-weight: bold;
+}
 
 .floating-label {
   position: absolute;
@@ -161,4 +189,100 @@ body.dark .floating-text-input:focus + .floating-label,
 body.dark .floating-text-input:not(:placeholder-shown) + .floating-label {
   background-color: #1e1e2f;
   color: #a5b4fc;
+}
+
+.results-list {
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.result-item {
+  background: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.result-title a {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #0a58ca;
+  text-decoration: none;
+}
+
+.result-title a:hover {
+  text-decoration: underline;
+}
+
+.result-snippet {
+  line-height: 1.6;
+  margin-top: 0.5rem;
+}
+
+mark {
+  background-color: yellow;
+  font-weight: bold;
+}
+
+.result-meta {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.result-snippet {
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.result-title a {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #0a58ca;
+  text-decoration: none;
+}
+
+.result-title a:hover {
+  text-decoration: underline;
+}
+
+.result-box {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.result-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.result-title {
+  font-weight: bold;
+  color: #0056b3;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.result-title:hover {
+  text-decoration: underline;
+}
+
+.snippet {
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.result-meta {
+  font-size: 0.8rem;
+  color: #888;
+  font-style: italic;
 }
